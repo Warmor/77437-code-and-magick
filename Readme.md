@@ -1,7 +1,7 @@
 # Личный проект «Код и Магия» [![Build status][travis-image]][travis-url] [![Dependency status][dependency-image]][dependency-url]
 
 * Студент: [Павел Гришин](https://up.htmlacademy.ru/javascript/4/user/77437).
-* Наставник: `Неизвестно`.
+* Наставник: [Дмитрий Безверхий].
 
 ---
 
