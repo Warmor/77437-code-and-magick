@@ -1,31 +1,28 @@
 var getMessage = function(a, b) {
+
+	var mesage = '';
+	var length = 0;
+	var sum = 0;
+
 	if (typeof a === 'boolean') {
 		if (a) {
-			var mesage = ('Я попал в ' + b);
-			return mesage;
+			mesage = ('Я попал в ' + b);
 		} else {
-			var mesage = ('Я никуда не попал');
-			return mesage;
+			mesage = ('Я никуда не попал');
 		}
 	} else if (typeof a === 'number') {
-			var mesage = ('Я прыгнул на ' + a * 100 + ' сантиметров');
-			return mesage;
-
-	} else if (typeof a === 'object') {
-			if (typeof b !== 'object') {
-				var sum = 0;
-				for (var i = a.length - 1; i >= 0; i--) {
-					sum += a[i];
-				}
-				var mesage = 'Я прошёл ' + sum + ' шагов';
-				return mesage;
-			} else {
-					var length = 0;
-					for (var i = a.length - 1; i >= 0; i--) {
-						length = length + a[i] + b[i];
-					}
-					var mesage = 'Я прошёл ' + length + ' метров';
-					return mesage;
+		mesage = ('Я прыгнул на ' + a * 100 + ' сантиметров');
+	} else if (Array.isArray(a) && Array.isArray(b)) {
+			for (var i = 0; i < a.length; i++) {
+				length = length + a[i] + b[i];
 			}
+			mesage = 'Я прошёл ' + length + ' метров';
+		} else if (Array.isArray(a) && !Array.isArray(b)){
+			for (var i = 0; i < a.length; i++) {
+				sum += a[i];
+			}
+			mesage = 'Я прошёл ' + sum + ' шагов';
+		}
 	}
+	return mesage;
 };
