@@ -1,78 +1,5 @@
 'use strict';
 
-
-function wrapText(game, text, maxWidth, lineHeight){
-	var words = text.split(" ");
-	var countWords = words.length;
-	var line = '';
-	for (var i = 0; i < countWords; i++) {
-		var testLine = line + words[i] + ' ';
-		var testWidth = game.ctx.measureText(testLine).width;
-		if (i == countWords - 1) {
-			if (testWidth < maxWidth) {
-				line += words[i] + " ";
-				game.ctx.fillText(line, 210, lineHeight);
-			}
-			else {
-				game.ctx.fillText(line, 210, lineHeight);
-				line = '';
-				lineHeight += 20;
-				game.ctx.fillText(words[i], 210, lineHeight);
-				console.log(line);
-				console.log(words[i]);
-			}
-		}
-		else if (testWidth < maxWidth) {
-			line += words[i] + " ";
-		}
-		else {
-			i--;
-			game.ctx.fillText(line, 210, lineHeight);
-			line = '';
-			lineHeight += 20;
-		}
-	}
-};
-
-
-
-
-var myConvas = function (game, text) {
-	
-	var maxWidth = 280;
-	var lineHeight = 105;
-	game.ctx.fillStyle = 'rgba(0,0,0,0.7)';
-	game.ctx.beginPath();
-	game.ctx.moveTo(200, 85);
-	game.ctx.lineTo(500, 85);
-	game.ctx.lineTo(500, 185);
-	game.ctx.lineTo(200, 220);
-	game.ctx.lineTo(200, 85);
-	game.ctx.fill();
-	game.ctx.closePath();
-
-	game.ctx.fillStyle = '#FFFFFF';
-	game.ctx.beginPath();
-	game.ctx.moveTo(190, 75);
-	game.ctx.lineTo(490, 75);
-	game.ctx.lineTo(490, 175);
-	game.ctx.lineTo(190, 210);
-	game.ctx.lineTo(190, 75);
-	game.ctx.fill();
-	game.ctx.closePath();
-
-	game.ctx.font = '16px PT Mono';
-	game.ctx.fillStyle = 'Black';
-	wrapText(game, text, maxWidth, lineHeight);
-
-
-
-};
-
-
-
-
-
 (function() {
 	/**
 	 * @const
@@ -453,18 +380,80 @@ var myConvas = function (game, text) {
 		_drawPauseScreen: function() {
 			switch (this.state.currentStatus) {
 				case Verdict.WIN:
-					myConvas(game, 'Ты думаешь, все закончилось? Ничего не закончилось, игра только начинается.');
+					this._myCanvas(game, 'Ты думаешь, все закончилось? Ничего не закончилось, игра только начинается.');
 					break;
 				case Verdict.FAIL:
-					myConvas(game, 'Игра окончена! Ты проиграл!');
+					this._myCanvas(game, 'Игра окончена! Ты проиграл!');
 					break;
 				case Verdict.PAUSE:
-					myConvas(game, 'Уже нужна пауза? Ну, ок. Будешь готов нажми "SPASE"');
+					this._myCanvas(game, 'Уже нужна пауза? Ну, ок. Будешь готов нажми "SPASE"');
 					break;
 				case Verdict.INTRO:
-					myConvas(game, 'Я хочу сыграть с тобой в одну игру.');
+					this._myCanvas(game, 'Я хочу сыграть с тобой в одну игру.');
 					break;
 			}
+		},
+
+		// Перенос текста в зависимости от ширины области
+		_wrapText: function (game, text, maxWidth, lineHeight){
+			var words = text.split(" ");
+			var countWords = words.length;
+			var line = '';
+			for (var i = 0; i < countWords; i++) {
+				var testLine = line + words[i] + ' ';
+				var testWidth = game.ctx.measureText(testLine).width;
+				if (i == countWords - 1) {
+					if (testWidth < maxWidth) {
+						line += words[i] + " ";
+						game.ctx.fillText(line, 210, lineHeight);
+					}
+					else {
+						game.ctx.fillText(line, 210, lineHeight);
+						line = '';
+						lineHeight += 20;
+						game.ctx.fillText(words[i], 210, lineHeight);
+					}
+				}
+				else if (testWidth < maxWidth) {
+					line += words[i] + " ";
+				}
+				else {
+					i--;
+					game.ctx.fillText(line, 210, lineHeight);
+					line = '';
+					lineHeight += 20;
+				}
+			}
+		},
+
+		// отрисовка облака сообщений
+		_myCanvas: function (game, text) {
+			
+			var maxWidth = 280;
+			var lineHeight = 105;
+			game.ctx.fillStyle = 'rgba(0,0,0,0.7)';
+			game.ctx.beginPath();
+			game.ctx.moveTo(200, 85);
+			game.ctx.lineTo(500, 85);
+			game.ctx.lineTo(500, 185);
+			game.ctx.lineTo(200, 220);
+			game.ctx.lineTo(200, 85);
+			game.ctx.fill();
+			game.ctx.closePath();
+
+			game.ctx.fillStyle = '#FFFFFF';
+			game.ctx.beginPath();
+			game.ctx.moveTo(190, 75);
+			game.ctx.lineTo(490, 75);
+			game.ctx.lineTo(490, 175);
+			game.ctx.lineTo(190, 210);
+			game.ctx.lineTo(190, 75);
+			game.ctx.fill();
+			game.ctx.closePath();
+
+			game.ctx.font = '16px PT Mono';
+			game.ctx.fillStyle = 'Black';
+			this._wrapText(game, text, maxWidth, lineHeight);
 		},
 
 		/**
