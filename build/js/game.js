@@ -394,11 +394,11 @@
       }
     },
 
-    /** 
-    * Перенос текста в зависимости от ширины области
-    */
-    _wrapText: function (game, text, maxWidth, lineHeight){
-      var words = text.split(" ");
+    /**
+     * Перенос текста в зависимости от ширины области
+     */
+    _wrapText: function (game, text, maxWidth, lineHeight) {
+      var words = text.split(' ');
       var countWords = words.length;
       var line = '';
       for (var i = 0; i < countWords; i++) {
@@ -406,20 +406,17 @@
         var testWidth = game.ctx.measureText(testLine).width;
         if (i === countWords - 1) {
           if (testWidth < maxWidth) {
-            line += words[i] + " ";
+            line += words[i] + ' ';
             game.ctx.fillText(line, 210, lineHeight);
-          }
-          else {
+          } else {
             game.ctx.fillText(line, 210, lineHeight);
             line = '';
             lineHeight += 20;
             game.ctx.fillText(words[i], 210, lineHeight);
           }
-        }
-        else if (testWidth < maxWidth) {
-          line += words[i] + " ";
-        }
-        else {
+        } else if (testWidth < maxWidth) {
+          line += words[i] + ' ';
+        } else {
           i--;
           game.ctx.fillText(line, 210, lineHeight);
           line = '';
@@ -428,9 +425,9 @@
       }
     },
 
-    /** 
-    * отрисовка облака сообщений
-    */
+    /**
+     * отрисовка облака сообщений
+     */
     _myCanvas: function (game, text) {
       var maxWidth = 280;
       var lineHeight = 105;
