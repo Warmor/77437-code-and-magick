@@ -397,7 +397,7 @@
     /**
      * Перенос текста в зависимости от ширины области
      */
-    _wrapText: function (game, text, maxWidth, lineHeight) {
+    _wrapText: function(game, text, maxWidth, lineHeight) {
       var words = text.split(' ');
       var countWords = words.length;
       var line = '';
@@ -428,7 +428,7 @@
     /**
      * отрисовка облака сообщений
      */
-    _myCanvas: function (game, text) {
+    _myCanvas: function(game, text) {
       var maxWidth = 280;
       var lineHeight = 105;
       game.ctx.fillStyle = 'rgba(0,0,0,0.7)';
