@@ -49,37 +49,36 @@ var browserCookies = require('browser-cookies');
     reviewText.required = false;
     labelText.classList.remove('required');
   }
-  /*Проверка на оценки*/
-  var formValid = function() {
-    var nameValid = reviewName.validity.valid;
-    var textValid = reviewText.validity.valid;
-    if (nameValid && textValid) {
-      tooltip.classList.add('invisible');
+  /*Валидация формы*/
+  var setFieldValid = function(setField, setTooltip, cetLabel) {
+    if (setField.validity.valid) {
+      setTooltip.hidden = true;
+      cetLabel.classList.remove('required');
+    } else {
+      setTooltip.hidden = false;
+      cetLabel.classList.add('required');
+    }
+  };
+  var setSubmitValid = function(name, text) {
+    if (name.validity.valid && text.validity.valid) {
       reviewSubmit.disabled = false;
-      labelName.classList.remove('required');
-      labelText.classList.remove('required');
-    } else if (!nameValid && !textValid) {
-      tooltipName.hidden = false;
-      tooltipText.hidden = false;
+    } else {
       reviewSubmit.disabled = true;
-      labelName.classList.add('required');
-      labelText.classList.add('required');
-      tooltip.classList.remove('invisible');
-    } else if (!textValid && nameValid) {
-      tooltipName.hidden = true;
-      tooltipText.hidden = false;
-      reviewSubmit.disabled = true;
-      labelName.classList.remove('required');
-      labelText.classList.add('required');
-      tooltip.classList.remove('invisible');
-    } else if (textValid && !nameValid) {
-      tooltipName.hidden = false;
-      tooltipText.hidden = true;
-      reviewSubmit.disabled = true;
-      labelName.classList.add('required');
-      labelText.classList.remove('required');
+    }
+  };
+  var setTooltipValid = function(name, text) {
+    if (name.validity.valid && text.validity.valid) {
+      tooltip.classList.add('invisible');
+    } else {
       tooltip.classList.remove('invisible');
     }
+  };
+
+  var formValid = function() {
+    setFieldValid(reviewName, tooltipName, labelName);
+    setFieldValid(reviewText, tooltipText, labelText);
+    setSubmitValid(reviewName, reviewText);
+    setTooltipValid(reviewName, reviewText);
   };
 
   /*Евенты*/
