@@ -9,7 +9,7 @@
   var reviewsList = document.querySelector('.reviews-list');
   var reviewTemplate = document.querySelector('#review-template');
   var reviewClone;
-  
+
   if ('content' in reviewTemplate) {
     reviewClone = reviewTemplate.content.querySelector('.review');
   } else {
@@ -25,7 +25,7 @@
       var reviewRatingDoble = reviewRating.cloneNode(true);
       review.insertBefore(reviewRatingDoble, reviewRating);
     }
-    
+
     reviewAuthor.onerror = function() {
       review.classList.add('review-load-failure');
     };
@@ -44,9 +44,9 @@
     reviewText.textContent = data.description;
     reviewsList.appendChild(review);
     return review;
-  }
-  
-  reviews.forEach(function(data){
+  };
+
+  window.reviews.forEach(function(data) {
     reviewCreate(data);
   });
   reviewsFilter.classList.remove('invisible');
