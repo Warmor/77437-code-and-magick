@@ -266,7 +266,7 @@ input[type=radio]:checked + .reviews-filter-item {
 }
 
 .review-rating {
-  display: block;
+  display: inline-block;
   width: 30px;
   height: 30px;
 
@@ -447,6 +447,7 @@ input[type=radio]:checked + .review-mark-label {
 }
 
 .review-form-label {
+  position: relative;
   font-size: 20px;
   line-height: 1.6;
 }
@@ -542,4 +543,13 @@ input[type=radio]:checked + .review-mark-label {
   font-weight: bold;
   font-size: 14px;
   color: #ffffff;
+}
+
+.required:before{
+  content: 'Необходимо заполнить';
+  position: absolute;
+  left: -150px;
+  top: 37px;
+  color: red;
+  font-size: 12px;
 }
