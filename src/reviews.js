@@ -38,13 +38,15 @@
       review.classList.add('review-load-failure');
     }, IMAGE_LOAD_TIMEOUT);
 
+    reviewAuthor.onload = function() {
+      clearTimeout(reviewAuthorLoadTimeout);
+      review.classList.remove('review-load-failure');
+    };
+
     reviewAuthor.onerror = function() {
       review.classList.add('review-load-failure');
     };
 
-    reviewAuthor.onload = function() {
-      clearTimeout(reviewAuthorLoadTimeout);
-    };
 
 
     reviewAuthor.src = data.author.picture;
@@ -52,6 +54,7 @@
     reviewAuthor.title = data.author.name;
     reviewText.textContent = data.description;
     reviewsList.appendChild(review);
+
     return review;
   };
 
