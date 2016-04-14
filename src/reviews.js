@@ -40,20 +40,22 @@
 
     reviewAuthor.onload = function() {
       clearTimeout(reviewAuthorLoadTimeout);
-      review.classList.remove('review-load-failure');
+      console.log('load');
     };
 
     reviewAuthor.onerror = function() {
+      clearTimeout(reviewAuthorLoadTimeout);
       review.classList.add('review-load-failure');
+      console.log('error');
     };
 
 
 
-    reviewAuthor.src = data.author.picture;
     reviewAuthor.alt = data.author.name;
     reviewAuthor.title = data.author.name;
     reviewText.textContent = data.description;
     reviewsList.appendChild(review);
+    reviewAuthor.src = data.author.picture;
 
     return review;
   };
