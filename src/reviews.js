@@ -83,47 +83,69 @@
     sortingTest(filterChecked);
   });
 
-  var sortingRecent = function(a, b) {
-    return a.date - b.date;
+
+
+  var sortingAll = function() {
+    newReviewArr = reviews.slice();
   };
+
+  var sortingRecent = function() {
+    newReviewArr.sort(function(a, b) {
+      return a.date - b.date;
+    });
+  };
+
+  var sortingGood = function() {
+    newReviewArr = newReviewArr.sort(sortingRating).filter(function(element) {
+      if (element.rating > 2) {
+        return true;
+      } else{
+        return false;
+      }
+    });
+  };
+
   var sortingRating = function(a, b) {
     return b.rating - a.rating;
   };
-  var sortingPopular = function(a, b) {
-    return a.review_usefulness - b.review_usefulness;
+
+  var sortingBad = function() {
+    newReviewArr = newReviewArr.sort(sortingRating).reverse().filter(function(element) {
+      if (element.rating < 3) {
+        return true;
+      } else{
+        return false;
+      }
+    });
+  };
+  var sortingPopular = function() {
+    newReviewArr.sort(function(a, b) {
+      return a.review_usefulness - b.review_usefulness;
+    });
   };
 
   var sortingTest = function(filterCheck) {
     var start = pageCount * 3;
     var end = start + 3;
     newReviewArr = reviews.slice();
-    if (filterCheck === 1) {
-      newReviewArr = reviews.slice();
+    switch (filterCheck) {
+      case 'reviews-all':
+        sortingAll();
+        break;
+      case 'reviews-recent':
+        sortingRecent();
+        break;
+      case 'reviews-good':
+        sortingGood();
+        break;
+      case 'reviews-bad':
+        sortingBad();
+        break;
+      case 'reviews-popular':
+        sortingPopular();
+        break;
     }
-    if (filterCheck === 2) {
-      newReviewArr.sort(sortingRecent);
-    }
-    if (filterCheck === 3) {
-      newReviewArr = newReviewArr.sort(sortingRating).filter(function(element) {
-        if (element.rating > 2) {
-          return true;
-        } else{
-          return false;
-        }
-      });
-    }
-    if (filterCheck === 4) {
-      newReviewArr = newReviewArr.sort(sortingRating).reverse().filter(function(element) {
-        if (element.rating < 3) {
-          return true;
-        } else{
-          return false;
-        }
-      });
-    }
-    if (filterCheck === 5) {
-      newReviewArr.sort(sortingPopular);
-    }
+
     if (newReviewArr.length <= end) {
       reviewsControl.classList.add('invisible');
     } else {
@@ -140,8 +162,7 @@
 
   reviewsFilter.addEventListener('click', function(evt) {
     if (evt.target.classList.contains('reviews-filter-item')) {
-      filterChecked = evt.target.id;
-      filterChecked = +filterChecked;
+      filterChecked = evt.target.previousSibling.id;
       clear();
       sortingTest(filterChecked);
     }
