@@ -36,7 +36,7 @@
 
   <section class="main-section reviews">
     <h2 class="section-title reviews-title">Отзывы</h2>
-
+    <img src="" alt="" onload="alert('load')" onerror="alert('error')">
     <form class="reviews-filter" action="index.html" method="get">
       <input type="radio" name="reviews" id="reviews-all" value="reviews-all" checked><label for="reviews-all" class="reviews-filter-item"> Все</label>
       <input type="radio" name="reviews" id="reviews-recent" value="reviews-recent"><label for="reviews-recent" class="reviews-filter-item"> Недавние</label>
@@ -119,13 +119,7 @@
   </article>
 </template>
 
-<script type="text/javascript">
-  var reviews = [];
-  function __reviewsLoadCallback(data) {
-    reviews = data;
-  };
-</script>
-<script src="//up.htmlacademy.ru/assets/js_intensive/jsonp/reviews.js"></script>
+
 <script src="js/main.js"></script>
 
 </body>
