@@ -725,6 +725,7 @@
       }
     },
 
+
     /** @private */
     _initializeGameListeners: function() {
       window.addEventListener('keydown', this._onKeyDown);
@@ -744,4 +745,42 @@
   var game = new Game(document.querySelector('.demo'));
   game.initializeLevelAndStart();
   game.setGameStatus(window.Game.Verdict.INTRO);
+
+  var backdroundBlock = document.querySelector('.header-clouds');
+  var gameBlock = document.querySelector('.demo');
+  var backdroundBlockPosition;
+  var gameBlockPosition;
+  var cooldown = 1;
+
+  var animatedBackground = function() {
+    backdroundBlockPosition = backdroundBlock.getBoundingClientRect();
+    backdroundBlock.style.backgroundPosition = 50 - (backdroundBlockPosition.top / 5) + '%';
+  };
+
+  var checkBlock = function() {
+    backdroundBlockPosition = backdroundBlock.getBoundingClientRect();
+    gameBlockPosition = gameBlock.getBoundingClientRect();
+    if (backdroundBlockPosition.bottom < 0 ) {
+      backdroundBlock.style.backgroundPosition = '';
+    }
+    if (gameBlockPosition.bottom < 0) {
+      game.setGameStatus(window.Game.Verdict.PAUSE);
+    }
+  };
+
+  var validateVisibleGame = function() {
+    if (cooldown) {
+      cooldown = 0;
+      setTimeout(function() {
+        cooldown = 1;
+        checkBlock();
+      }, 100);
+    }
+  };
+
+  window.addEventListener('scroll', function() {
+    animatedBackground();
+    validateVisibleGame();
+  });
+
 })();
