@@ -1,8 +1,11 @@
 'use strict';
 
-(function() {
+require([
+  './utilits'
+], function(utilits) {
   var reviews = [];
   var IMAGE_LOAD_TIMEOUT = 10000;
+  var REVIEWS_URL = '//o0.github.io/assets/json/reviews.json';
   var pageCount = 0;
   var reviewClone;
   var reviewsBlock = document.querySelector('.reviews');
@@ -47,8 +50,6 @@
       review.classList.add('review-load-failure');
     };
 
-
-
     reviewAuthor.alt = data.author.name;
     reviewAuthor.title = data.author.name;
     reviewText.textContent = data.description;
@@ -58,32 +59,16 @@
     return review;
   };
 
-  var reviewGet = function(callback) {
-    var xhr = new XMLHttpRequest();
-
-    reviewsBlock.classList.add('reviews-list-loading');
-    xhr.onload = function(evt) {
-      var reqestObj = evt.target;
-      var response = reqestObj.response;
-      var loadedData = JSON.parse(response);
-      callback(loadedData);
-      reviewsBlock.classList.remove('reviews-list-loading');
-    };
-
-    xhr.open('GET', '//o0.github.io/assets/json/reviews.json');
-    xhr.send();
-  };
-
   var reviewRender = function(reviewArr) {
     reviewArr.forEach(reviewCreate);
   };
 
-  reviewGet(function(reviewLoaded) {
+  utilits.callServer(function(reviewLoaded) {
+    reviewsBlock.classList.add('reviews-list-loading');
     reviews = reviewLoaded;
     sortingTest(filterChecked);
-  });
-
-
+    reviewsBlock.classList.remove('reviews-list-loading');
+  }, REVIEWS_URL);
 
   var sortingAll = function() {
     newReviewArr = reviews.slice();
@@ -173,7 +158,6 @@
     sortingTest(filterChecked);
   });
 
-
   reviewsFilter.classList.remove('invisible');
 
-})();
+});
