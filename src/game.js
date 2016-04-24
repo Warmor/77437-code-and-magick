@@ -1,5 +1,6 @@
 'use strict';
-define('game', function() {
+
+(function() {
   /**
    * @const
    * @type {number}
@@ -745,8 +746,8 @@ define('game', function() {
   game.initializeLevelAndStart();
   game.setGameStatus(window.Game.Verdict.INTRO);
 
-  var gameBlock = document.querySelector('.demo');
   var backdroundBlock = document.querySelector('.header-clouds');
+  var gameBlock = document.querySelector('.demo');
   var backdroundBlockPosition;
   var gameBlockPosition;
   var cooldown = 1;
@@ -782,4 +783,4 @@ define('game', function() {
     validateVisibleGame();
   });
 
-});
+})();

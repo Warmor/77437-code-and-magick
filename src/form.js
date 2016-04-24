@@ -1,7 +1,7 @@
 'use strict';
 var browserCookies = require('browser-cookies');
 
-define('reviews', function() {
+(function() {
   var formContainer = document.querySelector('.overlay-container');
   var formOpenButton = document.querySelector('.reviews-controls-new');
   var formCloseButton = document.querySelector('.review-form-close');
@@ -113,4 +113,4 @@ define('reviews', function() {
     this.submit();
   };
 
-});
+})();
