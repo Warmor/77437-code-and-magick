@@ -33,7 +33,5 @@ define('review', ['./review-create'], function(reviewCreate) {
   }
 
 
-  return Review;  
+  return Review;
 });
-
-

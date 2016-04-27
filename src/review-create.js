@@ -7,10 +7,10 @@ define('reviewCreate', function() {
   var reviewTemplate = document.querySelector('#review-template');
 
   if ('content' in reviewTemplate) {
-      reviewClone = reviewTemplate.content.querySelector('.review');
-    } else {
-      reviewClone = reviewTemplate.querySelector('.review');
-    }
+    reviewClone = reviewTemplate.content.querySelector('.review');
+  } else {
+    reviewClone = reviewTemplate.querySelector('.review');
+  }
 
   var reviewCreate = function(data) {
     var review = reviewClone.cloneNode(true);
