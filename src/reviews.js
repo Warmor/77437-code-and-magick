@@ -1,66 +1,32 @@
 'use strict';
 
 require([
-  './utilits'
-], function(utilits) {
+  './utilits',
+  './Review'
+], function(utilits, Review) {
   var reviews = [];
-  var IMAGE_LOAD_TIMEOUT = 10000;
   var REVIEWS_URL = '//o0.github.io/assets/json/reviews.json';
   var pageCount = 0;
-  var reviewClone;
   var reviewsBlock = document.querySelector('.reviews');
   var reviewsFilter = document.querySelector('.reviews-filter');
   var reviewsControl = document.querySelector('.reviews-controls-more');
   var reviewsList = document.querySelector('.reviews-list');
-  var reviewTemplate = document.querySelector('#review-template');
 
   var newReviewArr;
+  var reviewArrHash = [];
   var filterChecked = 1;
 
   reviewsFilter.classList.add('invisible');
   reviewsControl.classList.remove('invisible');
 
-  if ('content' in reviewTemplate) {
-    reviewClone = reviewTemplate.content.querySelector('.review');
-  } else {
-    reviewClone = reviewTemplate.querySelector('.review');
-  }
-
-  var reviewCreate = function(data) {
-    var review = reviewClone.cloneNode(true);
-    var reviewRating = review.querySelector('.review-rating');
-    var reviewText = review.querySelector('.review-text');
-    var reviewAuthor = review.querySelector('.review-author');
-    for (var i = 1; i < data.rating; i++) {
-      var reviewRatingDoble = reviewRating.cloneNode(true);
-      review.insertBefore(reviewRatingDoble, reviewRating);
-    }
-
-    var reviewAuthorLoadTimeout = setTimeout(function() {
-      reviewAuthor.src = '';
-      review.classList.add('review-load-failure');
-    }, IMAGE_LOAD_TIMEOUT);
-
-    reviewAuthor.onload = function() {
-      clearTimeout(reviewAuthorLoadTimeout);
-    };
-
-    reviewAuthor.onerror = function() {
-      clearTimeout(reviewAuthorLoadTimeout);
-      review.classList.add('review-load-failure');
-    };
-
-    reviewAuthor.alt = data.author.name;
-    reviewAuthor.title = data.author.name;
-    reviewText.textContent = data.description;
-    reviewsList.appendChild(review);
-    reviewAuthor.src = data.author.picture;
-
-    return review;
-  };
 
   var reviewRender = function(reviewArr) {
-    reviewArr.forEach(reviewCreate);
+    reviewArr.forEach(function(data) {
+      var review = new Review(data);
+      reviewArrHash.push(review);
+      reviewsList.appendChild(review.element);
+      console.dir(reviewArrHash);
+    });
   };
 
   utilits.callServer(function(reviewLoaded) {
@@ -141,7 +107,10 @@ require([
   };
 
   var clear = function() {
-    reviewsList.innerHTML = '';
+    reviewArrHash.forEach(function(item) {
+      item.remove();
+    });
+    reviewArrHash = [];
     pageCount = 0;
   };
 
