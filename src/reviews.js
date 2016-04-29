@@ -19,21 +19,6 @@ require([
   reviewsFilter.classList.add('invisible');
   reviewsControl.classList.remove('invisible');
 
-  var reviewGet = function(callback) {
-    var xhr = new XMLHttpRequest();
-
-    reviewsBlock.classList.add('reviews-list-loading');
-    xhr.onload = function(evt) {
-      var reqestObj = evt.target;
-      var response = reqestObj.response;
-      var loadedData = JSON.parse(response);
-      callback(loadedData);
-      reviewsBlock.classList.remove('reviews-list-loading');
-    };
-
-    xhr.open('GET', '//o0.github.io/assets/json/reviews.json');
-    xhr.send();
-  };
 
   var reviewRender = function(reviewArr) {
     reviewArr.forEach(function(data) {
@@ -44,12 +29,12 @@ require([
     });
   };
 
-  reviewGet(function(reviewLoaded) {
+  utilits.callServer(function(reviewLoaded) {
+    reviewsBlock.classList.add('reviews-list-loading');
     reviews = reviewLoaded;
     sortingTest(filterChecked);
-  });
-
-
+    reviewsBlock.classList.remove('reviews-list-loading');
+  }, REVIEWS_URL);
 
   var sortingAll = function() {
     newReviewArr = reviews.slice();
@@ -142,7 +127,6 @@ require([
     sortingTest(filterChecked);
   });
 
-
   reviewsFilter.classList.remove('invisible');
 
-})();
+});

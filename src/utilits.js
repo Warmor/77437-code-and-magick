@@ -1,6 +1,7 @@
 'use strict';
 
 define('utilits', function() {
+
   var callServer = function(callback, url) {
     var xhr = new XMLHttpRequest();
     xhr.onload = function(evt) {
