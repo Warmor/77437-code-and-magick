@@ -25,7 +25,6 @@ require([
       var review = new Review(data);
       reviewArrHash.push(review);
       reviewsList.appendChild(review.element);
-      console.dir(reviewArrHash);
     });
   };
 

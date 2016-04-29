@@ -4,5 +4,7 @@ require([
   './form',
   './game',
   './reviews',
-  './gallery'
+  './gallery',
+  './render-gallery'
 ]);
+
