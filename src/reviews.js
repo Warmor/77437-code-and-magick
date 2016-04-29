@@ -28,10 +28,16 @@ require([
     });
   };
 
+  var setOldFilter = function() {
+    sortingTest(localStorage.getItem('filterStok'));
+    var oldFilterInput = document.querySelector('#' + localStorage.getItem('filterStok'));
+    oldFilterInput.checked = true;
+  }
+
   utilits.callServer(function(reviewLoaded) {
     reviewsBlock.classList.add('reviews-list-loading');
     reviews = reviewLoaded;
-    sortingTest(filterChecked);
+    setOldFilter();
     reviewsBlock.classList.remove('reviews-list-loading');
   }, REVIEWS_URL);
 
@@ -116,6 +122,7 @@ require([
   reviewsFilter.addEventListener('click', function(evt) {
     if (evt.target.classList.contains('reviews-filter-item')) {
       filterChecked = evt.target.previousSibling.id;
+      localStorage.setItem('filterStok', filterChecked);
       clear();
       sortingTest(filterChecked);
     }
@@ -127,5 +134,4 @@ require([
   });
 
   reviewsFilter.classList.remove('invisible');
-
 });
