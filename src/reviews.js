@@ -32,7 +32,7 @@ require([
     sortingTest(localStorage.getItem('filterStok'));
     var oldFilterInput = document.querySelector('#' + localStorage.getItem('filterStok'));
     oldFilterInput.checked = true;
-  }
+  };
 
   utilits.callServer(function(reviewLoaded) {
     reviewsBlock.classList.add('reviews-list-loading');
