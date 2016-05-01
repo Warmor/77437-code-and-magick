@@ -2,80 +2,92 @@
 
 define('gallery', function() {
 
-  function Gallery() {
-    var overlayGallery = document.querySelector('.overlay-gallery');
-    var overlayGalleryClose = overlayGallery.querySelector('.overlay-gallery-close');
-    var overlayGalleryPreview = overlayGallery.querySelector('.overlay-gallery-preview');
-    var overlayGalleryPrev = overlayGallery.querySelector('.overlay-gallery-control-left');
-    var overlayGalleryNext = overlayGallery.querySelector('.overlay-gallery-control-right');
-    var previewNumberCurrent = overlayGallery.querySelector('.preview-number-current');
-    var previewNumberTotal = overlayGallery.querySelector('.preview-number-total');
-    var galleryImgList = document.querySelectorAll('.photogallery-image > img');
-
+  function Gallery(overlay) {
     var self = this;
-    self.galleryImgListSrc = [];
-    self.overlayGalleryPhoto = new Image();
-    self.numberImg = 0;
 
-    self._showPhoto = function() {
-      self.overlayGalleryPhoto.src = self.galleryImgListSrc[self.numberImg];
+    this.overlayGallery = overlay.gallery;
+    this.overlayGalleryClose = overlay.galleryClose;
+    this.overlayGalleryPreview = overlay.galleryPreview;
+    this.overlayGalleryPrev = overlay.galleryPrev;
+    this.overlayGalleryNext = overlay.galleryNext;
+    this.overlayNumberCurrent = overlay.galleryNumberCurrent;
+    this.overlayNumberTotal = overlay.galleryNumberTotal;
+    this.overlayGalleryPhoto = new Image();
+    self.overlayGalleryPhoto.style.maxHeight = 740 + 'px';
+    this.overlayListSrc = overlay.galleryListSrc;
+    this.numberImg = 0;
+
+
+    this._tooglePhoto = function(state) {
+      if (self.overlayGalleryNext === state.target) {
+        self.numberImg++;
+      } else {
+        self.numberImg--;
+      }
+      self.setHash(self.overlayListSrc[self.numberImg]);
     };
 
-    self.showGallery = function() {
-      self.galleryImgListSrc = [];
-      for (var i = 0; i < galleryImgList.length; i++) {
-        galleryImgList[i].dataset.num = [i];
-        self.galleryImgListSrc.push(galleryImgList[i].getAttribute('src'));
+    this._showNumberCurrent = function() {
+      self.overlayNumberCurrent.innerHTML = +(self.numberImg) + 1;
+      self.overlayNumberTotal.innerHTML = self.overlayListSrc.length;
+      if (self.numberImg < 1) {
+        self.overlayGalleryPrev.classList.add('invisible');
       }
-      overlayGallery.classList.remove('invisible');
-      overlayGalleryPreview.appendChild(self.overlayGalleryPhoto);
+      if (self.numberImg > self.overlayListSrc.length - 2) {
+        self.overlayGalleryNext.classList.add('invisible');
+      }
+      if (self.numberImg > 0 && self.numberImg < self.overlayListSrc.length - 1) {
+        self.overlayGalleryPrev.classList.remove('invisible');
+        self.overlayGalleryNext.classList.remove('invisible');
+      }
+    };
 
-      overlayGalleryPrev.addEventListener('click', self._tooglePhoto);
-      overlayGalleryNext.addEventListener('click', self._tooglePhoto);
-      overlayGalleryClose.addEventListener('click', self._hideGallery);
+    this._isPhoto = function(url) {
+      for (var i = 0; i < self.overlayListSrc.length; i++) {
+        if (self.overlayListSrc[i] === url.slice(7)) {
+          self.numberImg = i;
+          self.overlayGalleryPhoto.src = self.overlayListSrc[self.numberImg];
+          self._showNumberCurrent(i);
+        }
+      }
+    };
+
+    this._showGallery = function(url) {
+      self.overlayGallery.classList.remove('invisible');
+      self.overlayGalleryPreview.appendChild(self.overlayGalleryPhoto);
+      self._isPhoto(url);
+      this.overlayGalleryPrev.addEventListener('click', self._tooglePhoto);
+      this.overlayGalleryNext.addEventListener('click', self._tooglePhoto);
+      this.overlayGalleryClose.addEventListener('click', self._hideGallery);
       window.addEventListener('keydown', self._onDocumentKeyDown);
     };
 
-    self._showNumberCurrent = function() {
-      previewNumberCurrent.innerHTML = +(self.numberImg) + 1;
-      previewNumberTotal.innerHTML = self.galleryImgListSrc.length;
-
-      if (self.numberImg < 1) {
-        overlayGalleryPrev.classList.add('invisible');
-      }
-      if (self.numberImg > galleryImgList.length - 2) {
-        overlayGalleryNext.classList.add('invisible');
-      }
-      if (self.numberImg > 0 && self.numberImg < galleryImgList.length - 1) {
-        overlayGalleryPrev.classList.remove('invisible');
-        overlayGalleryNext.classList.remove('invisible');
-      }
-    };
-
-    self._onDocumentKeyDown = function(evt) {
+    this._onDocumentKeyDown = function(evt) {
       if (evt.keyCode === 27) {
         self._hideGallery();
       }
     };
 
-    self._hideGallery = function() {
-      overlayGallery.classList.add('invisible');
-      self.overlayGalleryPhoto.src = '';
-      overlayGalleryPrev.removeEventListener('click', self._tooglePhoto);
-      overlayGalleryNext.removeEventListener('click', self._tooglePhoto);
-      overlayGalleryClose.removeEventListener('click', self._hideGallery);
+    this._hideGallery = function() {
+      self.setHash();
+      self.overlayGallery.classList.add('invisible');
+      self.overlayGalleryPrev.removeEventListener('click', self._tooglePhoto);
+      self.overlayGalleryNext.removeEventListener('click', self._tooglePhoto);
+      self.overlayGalleryClose.removeEventListener('click', self._hideGallery);
       window.removeEventListener('keydown', self._onDocumentKeyDown);
     };
 
-    self._tooglePhoto = function(evt) {
-      if (evt.target.classList.contains('overlay-gallery-control-right')) {
-        self.numberImg++;
-        self._showPhoto(self.numberImg);
-        self._showNumberCurrent(self.numberImg);
+    this.setHash = function(url) {
+      if(url) {
+        location.hash = '#photo/' + url;
       } else {
-        self.numberImg--;
-        self._showPhoto(self.numberImg);
-        self._showNumberCurrent(self.numberImg);
+        location.hash = '';
+      }
+    };
+
+    this.getHash = function(url) {
+      if (~url.indexOf('#photo/')) {
+        self._showGallery(url);
       }
     };
   }
