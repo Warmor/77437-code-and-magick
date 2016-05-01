@@ -14,15 +14,15 @@ define('gallery', function() {
     this.overlayGalleryPhoto.style.maxHeight = 740 + 'px';
     this.overlayListSrc = overlay.galleryListSrc;
     this.numberImg = 0;
-    this._tooglePhoto = this._tooglePhoto.bind(this); 
-    this._showNumberCurrent = this._showNumberCurrent.bind(this); 
-    this._isPhoto = this._isPhoto.bind(this); 
-    this._showGallery = this._showGallery.bind(this); 
-    this._onDocumentKeyDown = this._onDocumentKeyDown.bind(this); 
-    this._hideGallery = this._hideGallery.bind(this); 
-    this.setHash = this.setHash.bind(this); 
-    this.getHash = this.getHash.bind(this); 
-  };
+    this._tooglePhoto = this._tooglePhoto.bind(this);
+    this._showNumberCurrent = this._showNumberCurrent.bind(this);
+    this._isPhoto = this._isPhoto.bind(this);
+    this._showGallery = this._showGallery.bind(this);
+    this._onDocumentKeyDown = this._onDocumentKeyDown.bind(this);
+    this._hideGallery = this._hideGallery.bind(this);
+    this.setHash = this.setHash.bind(this);
+    this.getHash = this.getHash.bind(this);
+  }
 
   Gallery.prototype._tooglePhoto = function(state) {
     if (this.overlayGalleryNext === state.target) {

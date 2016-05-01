@@ -9,7 +9,7 @@ define('review', ['./review-create'], function(reviewCreate) {
     this.onQuizClick = this.onQuizClick.bind(this);
     this.remove = this.remove.bind(this);
     this.quiz.addEventListener('click', this.onQuizClick);
-  };
+  }
 
   Review.prototype.onQuizClick = function(evt) {
     var quizActive = this.quiz.querySelector('.review-quiz-answer-active');
