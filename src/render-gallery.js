@@ -30,8 +30,8 @@ define('render-gallery', ['./gallery'], function(Gallery) {
   });
 
   window.addEventListener('hashchange', function() {
-    myGallery.getHash(location.hash);
+    myGallery.readHash(location.hash);
   });
 
-  myGallery.getHash(location.hash);
+  myGallery.readHash(location.hash);
 });
