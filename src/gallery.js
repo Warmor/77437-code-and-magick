@@ -21,7 +21,7 @@ define('gallery', function() {
     this._onDocumentKeyDown = this._onDocumentKeyDown.bind(this);
     this._hideGallery = this._hideGallery.bind(this);
     this.setHash = this.setHash.bind(this);
-    this.getHash = this.getHash.bind(this);
+    this.readHash = this.readHash.bind(this);
   }
 
   Gallery.prototype._tooglePhoto = function(state) {
@@ -53,7 +53,7 @@ define('gallery', function() {
       if (this.overlayListSrc[i] === url.slice(7)) {
         this.numberImg = i;
         this.overlayGalleryPhoto.src = this.overlayListSrc[this.numberImg];
-        this._showNumberCurrent(i);
+        this._showNumberCurrent();
       }
     }
   };
@@ -91,8 +91,8 @@ define('gallery', function() {
     }
   };
 
-  Gallery.prototype.getHash = function(url) {
-    if (~url.indexOf('#photo/')) {
+  Gallery.prototype.readHash = function(url) {
+    if (url.indexOf('#photo/') !== -1) {
       this._showGallery(url);
     }
   };
