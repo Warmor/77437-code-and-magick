@@ -2,7 +2,7 @@
 
 require([
   './utilits',
-  './Review'
+  './review'
 ], function(utilits, Review) {
   var reviews = [];
   var REVIEWS_URL = '//o0.github.io/assets/json/reviews.json';
