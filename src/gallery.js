@@ -32,7 +32,7 @@ define('gallery', function() {
     }
     this.setHash(this.overlayListSrc[this.numberImg]);
   };
-
+// Добавляет коректное значение нумерации фотографий, и скрывает стрелки переключений в крайних позициях.
   Gallery.prototype._showNumberCurrent = function() {
     this.overlayNumberCurrent.innerHTML = +(this.numberImg) + 1;
     this.overlayNumberTotal.innerHTML = this.overlayListSrc.length;
@@ -47,7 +47,7 @@ define('gallery', function() {
       this.overlayGalleryNext.classList.remove('invisible');
     }
   };
-
+// Проверяет на совпадение url адреса страницы с фотографиями на странице и показывает текущее фото
   Gallery.prototype._isPhoto = function(url) {
     for (var i = 0; i < this.overlayListSrc.length; i++) {
       if (this.overlayListSrc[i] === url.slice(7)) {
@@ -90,7 +90,7 @@ define('gallery', function() {
       location.hash = '';
     }
   };
-
+// Проверяет есть ли в начале url страницы #photo/ и показывает галлерею
   Gallery.prototype.readHash = function(url) {
     if (url.indexOf('#photo/') !== -1) {
       this._showGallery(url);

@@ -1,7 +1,7 @@
 'use strict';
 
 define('utilits', function() {
-
+// Получает Json отзывов с сервера
   var callServer = function(callback, url) {
     var xhr = new XMLHttpRequest();
     xhr.onload = function(evt) {

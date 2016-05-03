@@ -4,7 +4,7 @@ define('render-gallery', ['./gallery'], function(Gallery) {
 
   var photogallery = document.querySelector('.photogallery');
   var photogalleryImgList = document.querySelectorAll('.photogallery-image > img');
-
+// Обьект для конфигурации галлереи
   var overlay = {
     gallery: document.querySelector('.overlay-gallery'),
     galleryClose: document.querySelector('.overlay-gallery-close'),

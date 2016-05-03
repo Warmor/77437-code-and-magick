@@ -11,7 +11,7 @@ define('reviewCreate', function() {
   } else {
     reviewClone = reviewTemplate.querySelector('.review');
   }
-
+// Инициализация одного отрыва и обработка загрузки картинки
   var reviewCreate = function(data) {
     var review = reviewClone.cloneNode(true);
     var reviewRating = review.querySelector('.review-rating');
